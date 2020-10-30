@@ -1,0 +1,55 @@
+import usuarios.*
+import viaje.*
+import medioDeTransporte.*
+import destinos.*
+
+describe "Condiciones iniciales de Pablo Hari" {
+	
+	test "su dinero en cuenta inicial es de 7500" {
+		assert.equals(7500,pabloHari.dineroEnCuenta())
+	}
+	
+	test "su localidad de origen es Last Toninas" {
+		assert.equals(toninas,pabloHari.localidadDeOrigen())
+	}
+	
+	test "su localidad de origen es peligrosa" {
+		assert.that((pabloHari.localidadDeOrigen()).esPeligroso())
+	}
+}
+
+describe "Pablo Hari viaja a Garlic's Sea en tren y,posteriormente, a Silver's Sea en ferry "{
+	
+	const tren = new MedioDeTransporte(tardanza = 40, precioPorKilometro = 5)
+	const ferry = new MedioDeTransporte(tardanza = 25, precioPorKilometro = 15)
+	const viajeAGarlic = new Viaje(origen = pabloHari.localidadDeOrigen(), destino = garlic, transporte = tren)
+	const viajeASilver = new Viaje(origen = garlic, destino = silver, transporte = ferry)
+	const dineroEnCuentaInicial = pabloHari.dineroEnCuenta()
+	
+	fixture {
+		pabloHari.viajar(viajeAGarlic)
+		pabloHari.viajar(viajeASilver)
+	}
+	
+	test "la localidad de origen es Silver's Sea" {
+		assert.equals(silver,pabloHari.localidadDeOrigen())
+	}
+	
+	test "recorrio 105 kilometros en total" {
+		assert.equals(105,pabloHari.kilometrosRecorridos())
+	}
+	
+	test "su historial contiene el viaje a Garlic's Sea y a Silver's Sea" {
+		assert.that((pabloHari.historial()).contains(viajeAGarlic))
+		assert.that((pabloHari.historial()).contains(viajeASilver))
+	}
+		
+	test "posee $3035 en su cuenta"{
+		assert.equals(3035,pabloHari.dineroEnCuenta())
+	}
+	
+	test "gasto $4465" {
+		assert.equals((dineroEnCuentaInicial - pabloHari.dineroEnCuenta()),((viajeAGarlic.precioDelViaje()) + (viajeASilver.precioDelViaje())))
+	}
+}
+

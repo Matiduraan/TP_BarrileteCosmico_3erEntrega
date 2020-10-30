@@ -1,0 +1,66 @@
+import barrileteCosmico.*
+import destinos.*
+
+
+describe "condiciones iniciales de Barrilete Cosmico"{
+	
+	test "los destinos mas importantes de Barrilete Cosmico es una coleccion con garlic y toninas" {
+
+		assert.equals(#{garlic,toninas},barrileteCosmico.destinosMasImportantes())
+	}
+	
+		
+	test "el unico destino peligroso de Barrilete Cosmico es Last Toninas" {
+	
+		assert.equals(#{toninas},barrileteCosmico.destinosPeligrosos())
+	
+	}
+	
+	test "Barrilete Cosmico es una empresa extrema" {
+		
+		assert.that(barrileteCosmico.esExtrema())
+		
+	}
+	
+}
+
+
+describe "Barrilete Cosmico aplica descuentos a todos sus destinos" {
+
+	const destinos = #{garlic,silver,toninas,goodAirs}
+	
+	fixture {
+		barrileteCosmico.aplicarlesDescuento(0.15)
+	}
+	
+	test "el precio de Garlic's Sea luego del 15% de descuento, es de $2125" {
+	
+		assert.equals(2125,garlic.precio())
+	
+	}
+	
+	test "el precio de Silver's Sea luego del 15% de descuento, es de $1147.5" {
+	
+		assert.equals(1147.5,silver.precio())
+	
+	}
+	
+	test "el precio de Last Toninas luego del 15% de descuento, es de $2975" {
+	
+		assert.equals(2975,toninas.precio())
+	
+	}
+	
+	test "el precio de Good Airs luego del 15% de descuento, es de $1275" {
+	
+		assert.equals(1275,goodAirs.precio())
+	
+	}
+
+	test "todos los destinos deben tener el certificado de descuento" {
+		
+		assert.that(destinos.all({unDestino => unDestino.tieneEnElEquipaje("certificado de descuento")}))
+	}
+
+}
+

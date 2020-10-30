@@ -1,0 +1,84 @@
+import destinos.*
+
+describe "Tests de Garlic's Sea" {
+	
+	test "Garlic's Sea no es una localidad peligrosa" {
+		assert.notThat(garlic.esPeligroso())
+	}
+	
+	test "el equipaje imprescindible, luego de aplicarle 15% a Garlic's Sea, contiene 3 elementos"{
+		garlic.aplicarDescuento((garlic.precio())*0.15)
+		assert.equals(3,garlic.cantidadDeElementos())
+	}
+	
+	test "el equipaje imprescindible, luego de aplicarle 15% a Garlic's Sea, tiene el certificado de descuento"{
+		garlic.aplicarDescuento((garlic.precio())*0.15)
+		assert.that(garlic.tieneEnElEquipaje("certificado de descuento"))
+	}
+	
+	test "la distancia entre Garlic'Sea y Good Airs son 326 kilometros" {
+		assert.equals(326,garlic.distanciaAOtraLocalidad(goodAirs))
+	}
+}
+
+describe "Tests de Silver's Sea" {
+	
+	test "el equipaje imprescindible inicial, para viajar a Silver's Sea, contiene 2 elementos"{
+		assert.equals(2,silver.cantidadDeElementos())
+	}
+	
+	test "el equipaje imprescindible para viajar a Silver's Sea tiene un equipo de buceo" {
+		assert.that(silver.tieneEnElEquipaje("equipo de buceo"))
+	}
+	
+	test "Silver's Sea no es una localidad peligrosa" {
+		assert.notThat(silver.esPeligroso())
+	}
+	
+	test "la distancia entre Silver'Sea y Garlic's Sea son 9 kilometros" {
+		assert.equals(9,silver.distanciaAOtraLocalidad(garlic))
+	}
+	
+}
+
+describe "Tests de Last Toninas" {
+	
+	test "Last Toninas es una localidad peligrosa" {
+		assert.that(toninas.esPeligroso())
+	}
+	
+	test "el precio de Last Toninas luego del 25% de descuento, es de $2625" {
+		toninas.aplicarDescuento((toninas.precio())*0.25)
+		assert.equals(2625,toninas.precio())
+	}
+	
+	test "el equipaje imprescindible inicial, para viajar a Last Toninas, contiene 3 elementos"{
+		assert.equals(3,toninas.cantidadDeElementos())
+	}
+	
+	test "la distancia entre Last Toninas y Silver'Sea son 105 kilometros" {
+		assert.equals(105,toninas.distanciaAOtraLocalidad(silver))
+	}
+	
+}
+
+describe "Tests de Good Airs" {
+	
+	test "Good Airs no es una localidad peligrosa" {
+		assert.notThat(goodAirs.esPeligroso())
+	}
+	
+	test "el ultimo elemento del equipaje imprescindible es un protector solar" {
+		assert.equals("protector solar",goodAirs.ultimoElementoDelEquipaje())
+	}	
+	
+	test "la distancia entre Good Airs y Last Toninas son 230 kilometros" {
+		assert.equals(230,goodAirs.distanciaAOtraLocalidad(toninas))
+	}
+	
+	test "la distancia entre Good Airs y Silver'Sea son 335 kilometros" {
+		assert.equals(335,goodAirs.distanciaAOtraLocalidad(silver))
+	}
+}
+
+	
